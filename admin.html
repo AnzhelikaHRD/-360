@@ -199,7 +199,7 @@ function checkPin() {
   if (pin === stored) {
     document.getElementById('pin-screen').style.display = 'none';
     document.getElementById('main-app').style.display = 'block';
-    SCRIPT_URL = localStorage.getItem('kevin360_sheets_url') || '';
+    SCRIPT_URL = localStorage.getItem('kevin360_sheets_url') || SCRIPT_URL;
     loadSettings();
     loadPending();
   } else {
