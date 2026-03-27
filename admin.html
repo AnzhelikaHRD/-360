@@ -313,7 +313,7 @@ function createConfig() {
 
   fetch(SCRIPT_URL, {
     method: 'POST',
-    headers: {'Content-Type':'application/json'},
+    headers: {'Content-Type':'text/plain'},
     body: JSON.stringify({ action:'createConfig', name:normalized, position:position, peers:peers })
   })
   .then(function(r){ return r.json(); })
@@ -338,7 +338,7 @@ function deleteConfig(id) {
   if (!confirm('Видалити картку?')) return;
   fetch(SCRIPT_URL, {
     method: 'POST',
-    headers: {'Content-Type':'application/json'},
+    headers: {'Content-Type':'text/plain'},
     body: JSON.stringify({ action:'deleteConfig', id:id })
   }).then(function(){ loadPending(); }).catch(function(){});
 }
