@@ -321,7 +321,7 @@ function showPage(id) {
 
 window.onload = function() {
   buildScales();
-  SCRIPT_URL = localStorage.getItem('kevin360_sheets_url') || '';
+  SCRIPT_URL = localStorage.getItem('kevin360_sheets_url') || SCRIPT_URL;
   if (!SCRIPT_URL) { showPage('page-no-url'); return; }
   loadConfigs();
   document.getElementById('sel-role').addEventListener('change', checkDuplicate);
