@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KEVIN · HR Admin · 360°</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --teal:#2ec4b6;--teal-light:#e8f8f7;--teal-mid:#c2eeeb;
+  --brown:#4a4040;--bg:#f7f8fa;--white:#fff;
+  --text:#4a4040;--text2:#7a6e6e;--text3:#b0a8a8;
+  --border:#e8e2e2;--border2:#d4cece;
+  --green:#27ae60;--green-light:#eafaf1;
+  --red:#e74c3c;--red-light:#fdedec;
+  --amber:#f39c12;--amber-light:#fef9e7;
+  --shadow:0 2px 12px rgba(74,64,64,0.08);--r:10px;
+}
+body{background:var(--bg);color:var(--text);font-family:'Montserrat',sans-serif;font-size:14px;line-height:1.6;min-height:100vh}
+.topbar{background:var(--white);border-bottom:3px solid var(--teal);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;box-shadow:var(--shadow)}
+.topbar-left{display:flex;align-items:center;gap:12px}
+.logo-icon{width:36px;height:36px;background:var(--teal);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.logo-name{font-size:16px;font-weight:700;color:var(--brown);letter-spacing:0.06em}
+.logo-sub{font-size:10px;color:var(--text3);font-weight:600;letter-spacing:0.08em;text-transform:uppercase}
+.admin-badge{background:var(--teal);color:#fff;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px}
+.shell{max-width:760px;margin:0 auto;padding:24px 16px 80px}
+.tabs{display:flex;background:var(--white);border-radius:var(--r);overflow:hidden;margin-bottom:24px;box-shadow:var(--shadow);border:1px solid var(--border)}
+.tab{flex:1;padding:12px 8px;border:none;background:transparent;color:var(--text2);cursor:pointer;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;transition:all .2s;border-right:1px solid var(--border)}
+.tab:last-child{border-right:none}
+.tab.active{background:var(--teal);color:#fff}
+.tab:hover:not(.active){background:var(--teal-light);color:var(--teal)}
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:24px;margin-bottom:16px;box-shadow:var(--shadow)}
+.card-title{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.card-title::after{content:'';flex:1;height:1px;background:var(--teal-mid)}
+.question{margin-bottom:18px}.question:last-child{margin-bottom:0}
+.q-label{display:block;font-size:13px;font-weight:600;margin-bottom:7px;color:var(--brown)}
+.q-hint{font-size:11px;color:var(--text3);margin-top:-4px;margin-bottom:7px;line-height:1.5}
+select,input[type=text],input[type=number],input[type=password]{width:100%;background:var(--white);border:1.5px solid var(--border2);border-radius:8px;padding:10px 13px;color:var(--text);font-family:'Montserrat',sans-serif;font-size:13px;outline:none;transition:border .2s}
+select:focus,input:focus{border-color:var(--teal)}
+select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%237a6e6e' d='M6 8L0 0h12z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;cursor:pointer}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:8px;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.04em;transition:all .2s}
+.btn-primary{background:var(--teal);color:#fff}
+.btn-primary:hover{background:#25a99d;transform:translateY(-1px)}
+.btn-secondary{background:var(--white);color:var(--text2);border:1.5px solid var(--border2)}
+.btn-secondary:hover{border-color:var(--teal);color:var(--teal)}
+.btn-danger{background:var(--red-light);color:var(--red);border:1px solid #f1948a}
+.btn-sm{padding:7px 14px;font-size:11px}
+.divider{height:1px;background:var(--border);margin:16px 0}
+.alert{padding:12px 16px;border-radius:8px;font-size:13px;margin-bottom:14px;font-weight:500;line-height:1.5}
+.alert-info{background:var(--teal-light);border:1px solid var(--teal-mid);color:#1a9990}
+.alert-warn{background:var(--amber-light);border:1px solid #f7dc6f;color:var(--amber)}
+.pending-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:12px;box-shadow:var(--shadow)}
+.pending-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.pending-name{font-size:15px;font-weight:700;color:var(--brown)}
+.pending-pos{font-size:11px;color:var(--text3);margin-top:2px}
+.progress-track{height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:10px}
+.progress-fill{height:100%;background:var(--teal);border-radius:3px;transition:width .4s}
+.role-tags{display:flex;gap:6px;flex-wrap:wrap}
+.role-tag{font-size:11px;padding:4px 10px;border-radius:20px;font-weight:600}
+.tag-done{background:var(--green-light);color:var(--green)}
+.tag-wait{background:var(--border);color:var(--text3)}
+.arch-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:12px;box-shadow:var(--shadow)}
+.arch-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.arch-name{font-size:15px;font-weight:700;color:var(--brown)}
+.arch-pos{font-size:11px;color:var(--text3)}
+.arch-verdict{font-size:22px;font-weight:700;text-align:right}
+.arch-pass{color:var(--green)}.arch-fail{color:var(--red)}
+.blocks-row{display:flex;gap:8px;flex-wrap:wrap}
+.block-pill{font-size:11px;padding:4px 10px;border-radius:20px;background:var(--bg);border:1px solid var(--border);color:var(--text2);font-weight:600}
+.empty{text-align:center;padding:40px;color:var(--text3);font-size:13px}
+.spinner{width:24px;height:24px;border:3px solid var(--teal-mid);border-top-color:var(--teal);border-radius:50%;animation:spin .8s linear infinite;display:inline-block;vertical-align:middle;margin-right:8px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.settings-hint{font-size:12px;color:var(--text3);margin-top:6px;line-height:1.6}
+ol.inst{font-size:12px;color:var(--text2);line-height:2.2;padding-left:16px}
+</style>
+</head>
+<body>
+
+<!-- PIN екран -->
+<div id="pin-screen" style="position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:100">
+  <div class="card" style="width:340px;text-align:center">
+    <div style="font-size:36px;margin-bottom:12px">🔐</div>
+    <div style="font-size:16px;font-weight:700;color:var(--brown);margin-bottom:4px">HR Admin · KEVIN</div>
+    <div style="font-size:12px;color:var(--text3);margin-bottom:20px">Введіть PIN для доступу</div>
+    <input type="password" id="pin-input" placeholder="PIN-код" style="text-align:center;letter-spacing:0.2em;font-size:18px;margin-bottom:12px" onkeydown="if(event.key==='Enter')checkPin()">
+    <div id="pin-err" style="font-size:12px;color:var(--red);margin-bottom:10px;display:none">Невірний PIN</div>
+    <button class="btn btn-primary" style="width:100%" onclick="checkPin()">Увійти →</button>
+    <div style="font-size:11px;color:var(--text3);margin-top:14px">Стандартний PIN: 1234</div>
+  </div>
+</div>
+
+<div id="main-app" style="display:none">
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="logo-icon">🚀</div>
+    <div>
+      <div class="logo-name">KEVIN · HR Admin</div>
+      <div class="logo-sub">360° Панель управління</div>
+    </div>
+  </div>
+  <span class="admin-badge">HR</span>
+</div>
+
+<div class="shell">
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('pending')">⏳ Очікування</button>
+    <button class="tab" onclick="showTab('archive')">📁 Архів</button>
+    <button class="tab" onclick="showTab('settings')">⚙️ Налаштування</button>
+  </div>
+
+  <!-- ОЧІКУВАННЯ -->
+  <div id="tab-pending">
+    <div class="card">
+      <div class="card-title">➕ Нова картка співробітника</div>
+      <div class="two-col">
+        <div class="question">
+          <label class="q-label">Ім'я та прізвище</label>
+          <input type="text" id="cfg-name" placeholder="Марія Коваль">
+        </div>
+        <div class="question">
+          <label class="q-label">Посада</label>
+          <input type="text" id="cfg-position" placeholder="Presale менеджер">
+        </div>
+      </div>
+      <div class="question" style="margin-bottom:0">
+        <label class="q-label">Кількість колег-оцінювачів</label>
+        <div class="q-hint">Керівник (1) і самооцінка (1) додаються автоматично</div>
+        <input type="number" id="cfg-peers" min="1" max="7" value="2" style="width:140px">
+      </div>
+      <div style="margin-top:14px">
+        <button class="btn btn-primary" id="btn-create" onclick="createConfig()">Створити картку →</button>
+      </div>
+    </div>
+    <div id="pending-list"></div>
+  </div>
+
+  <!-- АРХІВ -->
+  <div id="tab-archive" style="display:none">
+    <div id="archive-list"></div>
+  </div>
+
+  <!-- НАЛАШТУВАННЯ -->
+  <div id="tab-settings" style="display:none">
+    <div class="card">
+      <div class="card-title">🔐 Зміна PIN-коду</div>
+      <div class="two-col">
+        <div class="question">
+          <label class="q-label">Новий PIN</label>
+          <input type="password" id="new-pin" placeholder="мінімум 4 символи">
+        </div>
+        <div class="question">
+          <label class="q-label">Підтвердження</label>
+          <input type="password" id="new-pin2" placeholder="повторіть PIN">
+        </div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="changePin()">Зберегти PIN</button>
+      <span id="pin-save-msg" style="font-size:12px;color:var(--green);margin-left:12px;opacity:0;transition:opacity .3s"></span>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🔗 Google Apps Script URL</div>
+      <div class="alert alert-warn">Цей URL використовується і в адмінці, і у формі для оцінювачів. Вставте один раз тут — і збережіть у налаштуваннях форми також.</div>
+      <div class="question" style="margin-bottom:0">
+        <label class="q-label">URL веб-застосунку</label>
+        <input type="text" id="sheets-url" placeholder="https://script.google.com/macros/s/AKfycbzBxMml9tvxay4WPx41mr6kqa6LDL4f4w-nDf46-EDxzQkuT1KNccghIP9SPxJZ175t/exec" oninput="saveUrl()">
+        <div class="settings-hint">Після збереження — перезавантажте сторінку форми (form.html), щоб вона підхопила новий URL</div>
+      </div>
+      <div style="margin-top:12px">
+        <button class="btn btn-secondary btn-sm" onclick="copyScript()">📋 Скопіювати код Apps Script</button>
+        <span id="copy-confirm" style="font-size:12px;color:var(--green);margin-left:12px;opacity:0;transition:opacity .3s"></span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📋 Інструкція налаштування</div>
+      <ol class="inst">
+        <li>Відкрийте Google Sheets → Розширення → <strong style="color:var(--brown)">Apps Script</strong></li>
+        <li>Видаліть весь код → вставте скопійований скрипт → збережіть</li>
+        <li><strong style="color:var(--brown)">Ввести в дію → Нове розгортання → Веб-застосунок</strong></li>
+        <li>Виконувати як: <strong style="color:var(--brown)">Я</strong> · Доступ: <strong style="color:var(--brown)">Усі</strong></li>
+        <li>Скопіюйте URL і вставте вище</li>
+        <li>Також вставте цей URL у вкладці Налаштування у <strong style="color:var(--brown)">form.html</strong></li>
+      </ol>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzBxMml9tvxay4WPx41mr6kqa6LDL4f4w-nDf46-EDxzQkuT1KNccghIP9SPxJZ175t/exec';
+var DEFAULT_PIN = '1234';
+
+// ── PIN ───────────────────────────────────────────
+function checkPin() {
+  var pin = document.getElementById('pin-input').value;
+  var stored = localStorage.getItem('kevin360_pin') || DEFAULT_PIN;
+  if (pin === stored) {
+    document.getElementById('pin-screen').style.display = 'none';
+    document.getElementById('main-app').style.display = 'block';
+    SCRIPT_URL = localStorage.getItem('kevin360_sheets_url') || '';
+    loadSettings();
+    loadPending();
+  } else {
+    document.getElementById('pin-err').style.display = 'block';
+    document.getElementById('pin-input').value = '';
+  }
+}
+document.getElementById('pin-input').addEventListener('keydown', function(e){ if(e.key==='Enter') checkPin(); });
+
+function changePin() {
+  var p1 = document.getElementById('new-pin').value;
+  var p2 = document.getElementById('new-pin2').value;
+  if (p1.length < 4) { alert('Мінімум 4 символи'); return; }
+  if (p1 !== p2)     { alert('PIN не співпадає'); return; }
+  localStorage.setItem('kevin360_pin', p1);
+  var msg = document.getElementById('pin-save-msg');
+  msg.textContent = '✓ PIN збережено'; msg.style.opacity = '1';
+  setTimeout(function(){ msg.style.opacity='0'; }, 2500);
+  document.getElementById('new-pin').value = '';
+  document.getElementById('new-pin2').value = '';
+}
+
+// ── TABS ─────────────────────────────────────────
+function showTab(t) {
+  ['pending','archive','settings'].forEach(function(x){
+    document.getElementById('tab-'+x).style.display = x===t ? 'block' : 'none';
+  });
+  document.querySelectorAll('.tab').forEach(function(b, i){
+    b.classList.toggle('active', ['pending','archive','settings'][i]===t);
+  });
+  if (t==='pending') loadPending();
+  if (t==='archive') loadArchive();
+}
+
+// ── PENDING ───────────────────────────────────────
+function loadPending() {
+  if (!SCRIPT_URL) {
+    document.getElementById('pending-list').innerHTML =
+      '<div class="empty">⚙️ Спочатку вкажіть URL Google Apps Script у вкладці Налаштування</div>';
+    return;
+  }
+  document.getElementById('pending-list').innerHTML =
+    '<div class="empty"><span class="spinner"></span>Завантаження...</div>';
+
+  fetch(SCRIPT_URL + '?action=getConfigs')
+    .then(function(r){ return r.json(); })
+    .then(function(configs) { renderPending(configs||[]); })
+    .catch(function() {
+      document.getElementById('pending-list').innerHTML =
+        '<div class="empty">❌ Помилка завантаження. Перевірте URL скрипту.</div>';
+    });
+}
+
+function renderPending(configs) {
+  var el = document.getElementById('pending-list');
+  if (!configs.length) {
+    el.innerHTML = '<div class="empty">Немає активних оцінювань.<br>Створіть картку вище.</div>';
+    return;
+  }
+
+  var promises = configs.map(function(cfg) {
+    return fetch(SCRIPT_URL + '?action=getSubmissions&configId=' + cfg.id)
+      .then(function(r){ return r.json(); })
+      .then(function(subs){ return { cfg:cfg, subs:subs||[] }; })
+      .catch(function(){ return { cfg:cfg, subs:[] }; });
+  });
+
+  Promise.all(promises).then(function(results) {
+    el.innerHTML = results.map(function(item) {
+      var cfg = item.cfg, subs = item.subs;
+      var pct = Math.min(100, Math.round((subs.length/cfg.total)*100));
+      var hasMgr  = subs.some(function(s){ return s.role==='manager'; });
+      var hasSelf = subs.some(function(s){ return s.role==='self'; });
+      var peerCnt = subs.filter(function(s){ return s.role==='peer'; }).length;
+      var roles = [{ label:'Керівник', done:hasMgr }];
+      for (var i=0; i<cfg.peers; i++) roles.push({ label:'Колега '+(i+1), done:i<peerCnt });
+      roles.push({ label:'Самооцінка', done:hasSelf });
+
+      return '<div class="pending-card">' +
+        '<div class="pending-header">' +
+          '<div><div class="pending-name">'+cfg.name+'</div>' +
+          '<div class="pending-pos">'+(cfg.position||'—')+' · з '+cfg.date+'</div></div>' +
+          '<div style="display:flex;gap:8px;align-items:center">' +
+            '<span style="font-size:13px;color:var(--text2);font-weight:600">'+subs.length+'/'+cfg.total+'</span>' +
+            '<button class="btn btn-danger btn-sm" onclick="deleteConfig(\''+cfg.id+'\')">✕</button>' +
+          '</div>' +
+        '</div>' +
+        '<div class="progress-track"><div class="progress-fill" style="width:'+pct+'%"></div></div>' +
+        '<div class="role-tags">' +
+          roles.map(function(r){
+            return '<span class="role-tag '+(r.done?'tag-done':'tag-wait')+'">'+(r.done?'✓':'')+' '+r.label+'</span>';
+          }).join('') +
+        '</div></div>';
+    }).join('');
+  });
+}
+
+function createConfig() {
+  var name     = document.getElementById('cfg-name').value.trim();
+  var position = document.getElementById('cfg-position').value.trim();
+  var peers    = parseInt(document.getElementById('cfg-peers').value) || 2;
+  if (!name) { alert('Введіть ім\'я'); return; }
+  if (!SCRIPT_URL) { alert('Спочатку вкажіть URL Google Apps Script у Налаштуваннях'); return; }
+
+  var normalized = name.split(' ').map(function(w){
+    return w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
+  }).join(' ');
+
+  var btn = document.getElementById('btn-create');
+  btn.disabled = true; btn.textContent = 'Створюємо...';
+
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ action:'createConfig', name:normalized, position:position, peers:peers })
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(res) {
+    if (res.ok) {
+      document.getElementById('cfg-name').value = '';
+      document.getElementById('cfg-position').value = '';
+      document.getElementById('cfg-peers').value = 2;
+      loadPending();
+    } else {
+      alert('Помилка створення картки');
+    }
+    btn.disabled = false; btn.textContent = 'Створити картку →';
+  })
+  .catch(function() {
+    alert('Помилка з\'єднання');
+    btn.disabled = false; btn.textContent = 'Створити картку →';
+  });
+}
+
+function deleteConfig(id) {
+  if (!confirm('Видалити картку?')) return;
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ action:'deleteConfig', id:id })
+  }).then(function(){ loadPending(); }).catch(function(){});
+}
+
+// ── ARCHIVE ───────────────────────────────────────
+function loadArchive() {
+  if (!SCRIPT_URL) {
+    document.getElementById('archive-list').innerHTML =
+      '<div class="empty">⚙️ Вкажіть URL Google Apps Script у Налаштуваннях</div>';
+    return;
+  }
+  document.getElementById('archive-list').innerHTML =
+    '<div class="empty"><span class="spinner"></span>Завантаження...</div>';
+  fetch(SCRIPT_URL + '?action=getArchive')
+    .then(function(r){ return r.json(); })
+    .then(function(archive) { renderArchive(archive||[]); })
+    .catch(function() {
+      document.getElementById('archive-list').innerHTML =
+        '<div class="empty">❌ Помилка завантаження</div>';
+    });
+}
+
+function renderArchive(archive) {
+  var el = document.getElementById('archive-list');
+  if (!archive.length) { el.innerHTML='<div class="empty">Архів порожній</div>'; return; }
+  el.innerHTML = archive.map(function(r) {
+    return '<div class="arch-card">' +
+      '<div class="arch-header">' +
+        '<div><div class="arch-name">'+r.name+'</div>' +
+        '<div class="arch-pos">'+(r.position||'—')+' · '+r.date+'</div></div>' +
+        '<div><div class="arch-verdict '+(r.pass?'arch-pass':'arch-fail')+'">'+(r.finalScore?parseFloat(r.finalScore).toFixed(2):'—')+' / 4.0</div>' +
+        '<div style="font-size:11px;text-align:right;margin-top:2px;color:'+(r.pass?'var(--green)':'var(--red)')+';font-weight:600">' +
+          (r.hardFail?'⚠️ Автопровал':r.pass?'✅ Пройшов ВТ':'❌ Не пройшов')+'</div></div>' +
+      '</div>' +
+      '<div class="blocks-row">' +
+        '<span class="block-pill">Керівник: '+(r.blocks&&r.blocks.manager?parseFloat(r.blocks.manager).toFixed(2):'—')+'</span>' +
+        '<span class="block-pill">Колеги: '+(r.blocks&&r.blocks.peer?parseFloat(r.blocks.peer).toFixed(2):'—')+'</span>' +
+        '<span class="block-pill">Самооцінка: '+(r.blocks&&r.blocks.self?parseFloat(r.blocks.self).toFixed(2):'—')+'</span>' +
+      '</div></div>';
+  }).join('');
+}
+
+// ── SETTINGS ─────────────────────────────────────
+function saveUrl() {
+  SCRIPT_URL = document.getElementById('sheets-url').value;
+  localStorage.setItem('kevin360_sheets_url', SCRIPT_URL);
+}
+
+function loadSettings() {
+  var url = localStorage.getItem('kevin360_sheets_url') || 'https://script.google.com/macros/s/AKfycbzBxMml9tvxay4WPx41mr6kqa6LDL4f4w-nDf46-EDxzQkuT1KNccghIP9SPxJZ175t/exec';
+  document.getElementById('sheets-url').value = url;
+  SCRIPT_URL = url || 'https://script.google.com/macros/s/AKfycbzBxMml9tvxay4WPx41mr6kqa6LDL4f4w-nDf46-EDxzQkuT1KNccghIP9SPxJZ175t/exec';
+}
+
+function copyScript() {
+  var s = `// KEVIN 360° — Google Apps Script
+// Вставте цей код у Apps Script і зробіть нове розгортання
+
+const SHEET_CONFIGS     = 'Картки';
+const SHEET_SUBMISSIONS = 'Оцінки';
+const SHEET_ARCHIVE     = 'Архів';
+
+function initSheets() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  function getOrCreate(name, headers) {
+    let sheet = ss.getSheetByName(name);
+    if (!sheet) { sheet = ss.insertSheet(name); sheet.appendRow(headers); sheet.setFrozenRows(1); }
+    return sheet;
+  }
+  getOrCreate(SHEET_CONFIGS, ['id','name','position','peers','total','completed','date']);
+  getOrCreate(SHEET_SUBMISSIONS, ['id','configId','employeeName','fullname','email','role','date','blockScore','m1','m2','m3','m4','m5','m6','m7','p1','p2','p3','p4','s1','s2','s3','recommend','develop','hardFail','advice','best','hard']);
+  getOrCreate(SHEET_ARCHIVE, ['name','position','finalScore','pass','hardFail','scoreManager','scorePeer','scoreSelf','date']);
+}
+
+function doGet(e) {
+  const action = e.parameter.action;
+  try {
+    if (action === 'getConfigs') return jsonResponse(getConfigs());
+    if (action === 'getSubmissions') return jsonResponse(getSubmissions(e.parameter.configId));
+    if (action === 'getArchive') return jsonResponse(getArchive());
+    return jsonResponse({ error: 'Unknown action' });
+  } catch(err) { return jsonResponse({ error: err.toString() }); }
+}
+
+function doPost(e) {
+  try {
+    const data = JSON.parse(e.postData.contents);
+    if (data.action === 'createConfig') return jsonResponse(createConfig(data));
+    if (data.action === 'deleteConfig') return jsonResponse(deleteConfig(data.id));
+    if (data.action === 'completeConfig') return jsonResponse(completeConfig(data.id));
+    if (data.action === 'submitEvaluation') return jsonResponse(submitEvaluation(data));
+    if (data.action === 'saveArchive') return jsonResponse(saveArchive(data));
+    return jsonResponse({ error: 'Unknown action' });
+  } catch(err) { return jsonResponse({ error: err.toString() }); }
+}
+
+function getConfigs() {
+  initSheets();
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_CONFIGS);
+  const rows = sheet.getDataRange().getValues();
+  if (rows.length <= 1) return [];
+  return rows.slice(1).map(r => ({ id:r[0],name:r[1],position:r[2],peers:r[3],total:r[4],completed:r[5]===true||r[5]==='TRUE',date:r[6] })).filter(c => !c.completed);
+}
+
+function createConfig(data) {
+  initSheets();
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_CONFIGS);
+  const id = 'cfg_' + Date.now();
+  const peers = parseInt(data.peers) || 2;
+  sheet.appendRow([id, data.name, data.position, peers, peers+2, false, new Date().toLocaleDateString('uk-UA')]);
+  return { ok: true, id };
+}
+
+function deleteConfig(id) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_CONFIGS);
+  const rows = sheet.getDataRange().getValues();
+  for (let i=1; i<rows.length; i++) { if (rows[i][0]===id) { sheet.deleteRow(i+1); return {ok:true}; } }
+  return { ok:false };
+}
+
+function completeConfig(id) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_CONFIGS);
+  const rows = sheet.getDataRange().getValues();
+  for (let i=1; i<rows.length; i++) { if (rows[i][0]===id) { sheet.getRange(i+1,6).setValue(true); return {ok:true}; } }
+  return { ok:false };
+}
+
+function getSubmissions(configId) {
+  initSheets();
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_SUBMISSIONS);
+  const rows = sheet.getDataRange().getValues();
+  if (rows.length <= 1) return [];
+  return rows.slice(1).filter(r => !configId || r[1]===configId).map(r => ({
+    id:r[0],configId:r[1],employeeName:r[2],fullname:r[3],email:r[4],role:r[5],date:r[6],
+    blockScore:parseFloat(r[7])||0,
+    qual:{recommend:r[22],develop:r[23],hardFail:r[24]==='TRUE'||r[24]===true,advice:r[25],best:r[26],hard:r[27]}
+  }));
+}
+
+function submitEvaluation(data) {
+  initSheets();
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_SUBMISSIONS);
+  const existing = getSubmissions(null);
+  const dup = existing.find(s => s.email&&s.email.toLowerCase()===(data.email||'').toLowerCase()&&s.role===data.role&&s.employeeName&&s.employeeName.toLowerCase()===(data.employeeName||'').toLowerCase());
+  if (dup) return { ok:false, error:'duplicate' };
+  const a=data.answers||{}, q=data.qual||{}, id='sub_'+Date.now();
+  sheet.appendRow([id,data.configId,data.employeeName,data.fullname,data.email,data.role,data.date,data.blockScore,a.m1||'',a.m2||'',a.m3||'',a.m4||'',a.m5||'',a.m6||'',a.m7||'',a.p1||'',a.p2||'',a.p3||'',a.p4||'',a.s1||'',a.s2||'',a.s3||'',q.recommend||'',q.develop||'',q.hardFail||false,q.advice||'',q.best||'',q.hard||'']);
+  return { ok:true, id };
+}
+
+function getArchive() {
+  initSheets();
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_ARCHIVE);
+  const rows = sheet.getDataRange().getValues();
+  if (rows.length <= 1) return [];
+  return rows.slice(1).map(r => ({ name:r[0],position:r[1],finalScore:parseFloat(r[2])||0,pass:r[3]===true||r[3]==='TRUE',hardFail:r[4]===true||r[4]==='TRUE',blocks:{manager:parseFloat(r[5])||0,peer:parseFloat(r[6])||0,self:parseFloat(r[7])||0},date:r[8] }));
+}
+
+function saveArchive(data) {
+  initSheets();
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_ARCHIVE);
+  sheet.appendRow([data.name,data.position,data.finalScore,data.pass,data.hardFail,data.blocks.manager,data.blocks.peer||'',data.blocks.self,data.date]);
+  return { ok:true };
+}
+
+function jsonResponse(data) {
+  return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(ContentService.MimeType.JSON);
+}`;
+
+  navigator.clipboard.writeText(s).then(function() {
+    var c = document.getElementById('copy-confirm');
+    c.textContent = '✓ Скопійовано!'; c.style.opacity = '1';
+    setTimeout(function(){ c.style.opacity='0'; }, 2500);
+  });
+}
+</script>
+</body>
+</html>

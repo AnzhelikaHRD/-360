@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KEVIN · 360° Оцінка ВТ</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --teal:#2ec4b6;--teal-light:#e8f8f7;--teal-mid:#c2eeeb;
+  --brown:#4a4040;--bg:#f7f8fa;--white:#fff;
+  --text:#4a4040;--text2:#7a6e6e;--text3:#b0a8a8;
+  --border:#e8e2e2;--border2:#d4cece;
+  --green:#27ae60;--green-light:#eafaf1;
+  --red:#e74c3c;--red-light:#fdedec;
+  --shadow:0 2px 12px rgba(74,64,64,0.08);--r:10px;
+}
+body{background:var(--bg);color:var(--text);font-family:'Montserrat',sans-serif;font-size:14px;line-height:1.6;min-height:100vh}
+.topbar{background:var(--white);border-bottom:3px solid var(--teal);padding:16px 24px;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow)}
+.logo-icon{width:36px;height:36px;background:var(--teal);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.logo-name{font-size:16px;font-weight:700;color:var(--brown);letter-spacing:0.06em}
+.logo-sub{font-size:10px;color:var(--text3);font-weight:600;letter-spacing:0.08em;text-transform:uppercase}
+.shell{max-width:640px;margin:0 auto;padding:24px 16px 80px}
+.page{display:none}.page.active{display:block}
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:24px;margin-bottom:16px;box-shadow:var(--shadow)}
+.card-title{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.card-title::after{content:'';flex:1;height:1px;background:var(--teal-mid)}
+.question{margin-bottom:20px}.question:last-child{margin-bottom:0}
+.q-label{display:block;font-size:13px;font-weight:600;margin-bottom:7px;color:var(--brown)}
+.q-hint{font-size:11px;color:var(--text3);margin-bottom:7px;margin-top:-4px;line-height:1.5}
+.req{color:var(--red)}
+.scale{display:flex;gap:8px;margin-bottom:4px}
+.scale-btn{flex:1;padding:11px 4px;border-radius:8px;border:1.5px solid var(--border2);background:var(--white);color:var(--text2);font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;cursor:pointer;transition:all .15s;text-align:center}
+.scale-btn:hover{border-color:var(--teal);color:var(--teal);background:var(--teal-light)}
+.scale-btn.sel-1{background:#fff5f5;border-color:#e74c3c;color:#e74c3c}
+.scale-btn.sel-2{background:#fffbf0;border-color:#f39c12;color:#f39c12}
+.scale-btn.sel-3{background:#f0f7ff;border-color:#3498db;color:#3498db}
+.scale-btn.sel-4{background:var(--green-light);border-color:var(--green);color:var(--green)}
+.scale-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--text3);padding:0 2px;margin-top:2px}
+select,input[type=text],input[type=email],textarea{width:100%;background:var(--white);border:1.5px solid var(--border2);border-radius:8px;padding:11px 14px;color:var(--text);font-family:'Montserrat',sans-serif;font-size:13px;outline:none;transition:border .2s}
+textarea{resize:vertical;min-height:80px}
+select:focus,input:focus,textarea:focus{border-color:var(--teal)}
+select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%237a6e6e' d='M6 8L0 0h12z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;cursor:pointer}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:8px;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.04em;transition:all .2s}
+.btn-primary{background:var(--teal);color:#fff}
+.btn-primary:hover{background:#25a99d;transform:translateY(-1px);box-shadow:0 4px 12px rgba(46,196,182,0.3)}
+.btn-primary:disabled{background:var(--border2);color:var(--text3);cursor:not-allowed;transform:none;box-shadow:none}
+.btn-secondary{background:var(--white);color:var(--text2);border:1.5px solid var(--border2)}
+.btn-secondary:hover{border-color:var(--teal);color:var(--teal)}
+.btn-row{display:flex;gap:12px;justify-content:flex-end;margin-top:20px}
+.divider{height:1px;background:var(--border);margin:18px 0}
+.alert-err{background:var(--red-light);border:1px solid #f1948a;color:var(--red);padding:12px 16px;border-radius:8px;font-size:13px;margin-bottom:16px;font-weight:500}
+.blocked{text-align:center;padding:48px 24px}
+.blocked-icon{font-size:48px;margin-bottom:16px}
+.blocked-title{font-size:18px;font-weight:700;color:var(--brown);margin-bottom:8px}
+.blocked-sub{font-size:13px;color:var(--text2)}
+.rubric{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.rubric-item{border-radius:8px;padding:11px 13px;border-left:3px solid}
+.r1{background:#fff5f5;border-color:#e74c3c}.r2{background:#fffbf0;border-color:#f39c12}
+.r3{background:#f0f7ff;border-color:#3498db}.r4{background:var(--green-light);border-color:var(--green)}
+.rubric-score{font-size:18px;font-weight:700;margin-bottom:2px}
+.rs1{color:#e74c3c}.rs2{color:#f39c12}.rs3{color:#3498db}.rs4{color:var(--green)}
+.rubric-desc{font-size:11px;color:var(--text2);line-height:1.4}
+.success-screen{text-align:center;padding:48px 24px}
+.success-icon{font-size:64px;margin-bottom:20px}
+.success-title{font-size:22px;font-weight:700;color:var(--brown);margin-bottom:10px}
+.success-sub{font-size:14px;color:var(--text2);line-height:1.7;max-width:380px;margin:0 auto}
+.loader{text-align:center;padding:48px;color:var(--text3);font-size:13px}
+.spinner{width:32px;height:32px;border:3px solid var(--teal-mid);border-top-color:var(--teal);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="logo-icon">🚀</div>
+  <div>
+    <div class="logo-name">KEVIN · HR Tools</div>
+    <div class="logo-sub">360° Оцінка випробувального терміну</div>
+  </div>
+</div>
+
+<div class="shell">
+
+  <!-- Завантаження -->
+  <div id="page-loading" class="page active">
+    <div class="card"><div class="loader"><div class="spinner"></div>Завантаження...</div></div>
+  </div>
+
+  <!-- Немає активних -->
+  <div id="page-blocked" class="page">
+    <div class="card">
+      <div class="blocked">
+        <div class="blocked-icon">🔒</div>
+        <div class="blocked-title">Наразі немає активних оцінювань</div>
+        <div class="blocked-sub">HR ще не відкрив форму для заповнення.<br>Зверніться до HR-менеджера.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Налаштування не вказані -->
+  <div id="page-no-url" class="page">
+    <div class="card">
+      <div class="blocked">
+        <div class="blocked-icon">⚙️</div>
+        <div class="blocked-title">Форма не налаштована</div>
+        <div class="blocked-sub">HR-менеджер ще не підключив Google Sheets.<br>Зверніться до адміністратора.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Старт -->
+  <div id="page-start" class="page">
+    <div class="card">
+      <div class="card-title">Ваші дані</div>
+      <div class="question">
+        <label class="q-label">Ваше ПІБ <span class="req">*</span></label>
+        <input type="text" id="inp-fullname" placeholder="Іваненко Іван Іванович">
+      </div>
+      <div class="question">
+        <label class="q-label">Ваш робочий email <span class="req">*</span></label>
+        <input type="email" id="inp-email" placeholder="name@kevin.ua">
+      </div>
+      <div class="question">
+        <label class="q-label">Ваша роль <span class="req">*</span></label>
+        <select id="sel-role">
+          <option value="">— Оберіть роль —</option>
+          <option value="manager">Керівник</option>
+          <option value="peer">Колега</option>
+          <option value="self">Співробітник (самооцінка)</option>
+        </select>
+      </div>
+      <div class="question" style="margin-bottom:0">
+        <label class="q-label">Кого оцінюєте <span class="req">*</span></label>
+        <select id="sel-employee"><option value="">— Оберіть співробітника —</option></select>
+      </div>
+    </div>
+    <div id="already-submitted" class="alert-err" style="display:none">
+      ❌ Ви вже залишили оцінку для цього співробітника в цій ролі. Повторне заповнення неможливе.
+    </div>
+    <div class="card">
+      <div class="card-title">📋 Шкала оцінювання</div>
+      <div class="rubric">
+        <div class="rubric-item r1"><div class="rubric-score rs1">1</div><div class="rubric-desc">Не відповідає очікуванням. Потребує значного покращення</div></div>
+        <div class="rubric-item r2"><div class="rubric-score rs2">2</div><div class="rubric-desc">Частково відповідає. Є суттєві зони росту</div></div>
+        <div class="rubric-item r3"><div class="rubric-score rs3">3</div><div class="rubric-desc">Відповідає очікуванням. Стабільний результат</div></div>
+        <div class="rubric-item r4"><div class="rubric-score rs4">4</div><div class="rubric-desc">Перевищує очікування. Виражена сильна сторона</div></div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" id="btn-start" onclick="startForm()">Розпочати оцінку →</button>
+    </div>
+  </div>
+
+  <!-- Керівник -->
+  <div id="page-manager" class="page">
+    <div class="card">
+      <div class="card-title">🎯 Результативність</div>
+      <div class="question">
+        <label class="q-label">1. Оцінка виконання робочих завдань за випробувальний термін <span class="req">*</span></label>
+        <div class="q-hint">Зіставте з критеріями, що були визначені на старті.</div>
+        <div class="scale" data-q="m1"></div>
+        <div class="scale-labels"><span>Не виконав</span><span>Перевиконав</span></div>
+      </div>
+      <div class="question">
+        <label class="q-label">2. Відповідність цінностям: Екологічність, Чесність, Гнучкість <span class="req">*</span></label>
+        <div class="q-hint">Конструктивна комунікація, дотримання обіцянок, відкритість до діалогу</div>
+        <div class="scale" data-q="m2"></div>
+      </div>
+      <div class="question">
+        <label class="q-label">3. Проактивність і самостійність у роботі <span class="req">*</span></label>
+        <div class="q-hint">Чи діє без нагадувань? Чи знаходить рішення самостійно?</div>
+        <div class="scale" data-q="m3"></div>
+        <div class="scale-labels"><span>Чекає завдань</span><span>Ініціює сам</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">💬 Навички та самостійність</div>
+      <div class="question">
+        <label class="q-label">4. Комунікативні навички <span class="req">*</span></label>
+        <div class="scale" data-q="m4"></div>
+      </div>
+      <div class="question">
+        <label class="q-label">5. Управління часом та дедлайнами <span class="req">*</span></label>
+        <div class="scale" data-q="m5"></div>
+      </div>
+      <div class="question">
+        <label class="q-label">6. Рівень самостійності <span class="req">*</span></label>
+        <div class="q-hint">1 — постійно потребував підтримки · 4 — повністю автономний</div>
+        <div class="scale" data-q="m6"></div>
+      </div>
+      <div class="question">
+        <label class="q-label">7. Потенціал до розвитку в команді <span class="req">*</span></label>
+        <div class="scale" data-q="m7"></div>
+        <div class="scale-labels"><span>Малоймовірно</span><span>Однозначно</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">📌 Рекомендація</div>
+      <div class="question">
+        <label class="q-label">8. Ваша рекомендація <span class="req">*</span></label>
+        <select id="m-recommend">
+          <option value="">— Оберіть —</option>
+          <option value="pass">✅ Продовжити — пройшов ВТ</option>
+          <option value="conditional">⚠️ Умовно — потребує додаткового місяця</option>
+          <option value="fail">❌ Не продовжувати</option>
+        </select>
+      </div>
+      <div class="question" style="margin-bottom:0">
+        <label class="q-label">9. Що рекомендуєте розвивати?</label>
+        <textarea id="m-develop" placeholder="Ваші рекомендації..."></textarea>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="showPage('page-start')">← Назад</button>
+      <button class="btn btn-primary" id="btn-submit-m" onclick="submitForm()">Відправити оцінку →</button>
+    </div>
+  </div>
+
+  <!-- Колега -->
+  <div id="page-peer" class="page">
+    <div class="card">
+      <div class="card-title">🤝 Взаємодія та цінності</div>
+      <div class="question">
+        <label class="q-label">1. Комфорт та ефективність взаємодії по робочих питаннях <span class="req">*</span></label>
+        <div class="scale" data-q="p1"></div>
+        <div class="scale-labels"><span>Дуже складно</span><span>Дуже комфортно</span></div>
+      </div>
+      <div class="question">
+        <label class="q-label">2. Відповідність цінностям Екологічності та Чесності <span class="req">*</span></label>
+        <div class="q-hint">Субординація, відкритість, відсутність пасивної агресії</div>
+        <div class="scale" data-q="p2"></div>
+      </div>
+      <div class="question">
+        <label class="q-label">3. Виконання зобов'язань перед командою <span class="req">*</span></label>
+        <div class="q-hint">Дотримання домовленостей і дедлайнів у спільних задачах</div>
+        <div class="scale" data-q="p3"></div>
+        <div class="scale-labels"><span>Часто зривав</span><span>Завжди виконував</span></div>
+      </div>
+      <div class="question">
+        <label class="q-label">4. Вписується в атмосферу команди KEVIN <span class="req">*</span></label>
+        <div class="scale" data-q="p4"></div>
+        <div class="scale-labels"><span>Не вписується</span><span>Чудово вписується</span></div>
+      </div>
+      <div class="question" style="margin-bottom:0">
+        <label class="q-label">5. Щира порада для росту</label>
+        <div class="q-hint">Якби ти міг дати одну пораду — що б це було?</div>
+        <textarea id="p-advice" placeholder="Ваша щира порада..."></textarea>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="showPage('page-start')">← Назад</button>
+      <button class="btn btn-primary" id="btn-submit-p" onclick="submitForm()">Відправити оцінку →</button>
+    </div>
+  </div>
+
+  <!-- Самооцінка -->
+  <div id="page-self" class="page">
+    <div class="card">
+      <div class="card-title">🪞 Самооцінка</div>
+      <div class="question">
+        <label class="q-label">1. Якість виконання робочого функціоналу <span class="req">*</span></label>
+        <div class="scale" data-q="s1"></div>
+        <div class="scale-labels"><span>Не впорався</span><span>Перевершив себе</span></div>
+      </div>
+      <div class="question">
+        <label class="q-label">2. Відповідність цінностям: Чесність, Екологічність, Проактивність <span class="req">*</span></label>
+        <div class="scale" data-q="s2"></div>
+      </div>
+      <div class="question">
+        <label class="q-label">3. Комфорт у взаємодії з командою <span class="req">*</span></label>
+        <div class="scale" data-q="s3"></div>
+        <div class="scale-labels"><span>Дуже складно</span><span>Дуже комфортно</span></div>
+      </div>
+      <div class="divider"></div>
+      <div class="question">
+        <label class="q-label">4. Що вдалось найкраще за цей період?</label>
+        <textarea id="s-best" placeholder="Ваші досягнення..."></textarea>
+      </div>
+      <div class="question" style="margin-bottom:0">
+        <label class="q-label">5. Що хотіли б покращити?</label>
+        <textarea id="s-hard" placeholder="Зони росту..."></textarea>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="showPage('page-start')">← Назад</button>
+      <button class="btn btn-primary" id="btn-submit-s" onclick="submitForm()">Відправити оцінку →</button>
+    </div>
+  </div>
+
+  <!-- Успіх -->
+  <div id="page-success" class="page">
+    <div class="card">
+      <div class="success-screen">
+        <div class="success-icon">✅</div>
+        <div class="success-title">Дякуємо за вашу оцінку!</div>
+        <div class="success-sub">Ваші відповіді успішно збережено та передано HR-менеджеру.<br><br>Ваш внесок допомагає нам приймати зважені рішення та підтримувати якісне середовище в команді KEVIN.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzBxMml9tvxay4WPx41mr6kqa6LDL4f4w-nDf46-EDxzQkuT1KNccghIP9SPxJZ175t/exec';
+var CFG = {
+  manager: { qs:[{id:'m1',w:3},{id:'m2',w:3},{id:'m3',w:3},{id:'m4',w:2},{id:'m5',w:2},{id:'m6',w:2},{id:'m7',w:1}], weight:0.5 },
+  peer:    { qs:[{id:'p1',w:3},{id:'p2',w:3},{id:'p3',w:2},{id:'p4',w:1}], weight:0.3 },
+  self:    { qs:[{id:'s1',w:3},{id:'s2',w:2},{id:'s3',w:1}], weight:0.2 }
+};
+var THRESHOLD = 2.8;
+var answers = {}, currentRole = '', currentEmployee = '', currentConfigId = '';
+var currentEmail = '', currentFullname = '';
+var activeConfigs = [];
+
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+window.onload = function() {
+  buildScales();
+  SCRIPT_URL = localStorage.getItem('kevin360_sheets_url') || '';
+  if (!SCRIPT_URL) { showPage('page-no-url'); return; }
+  loadConfigs();
+  document.getElementById('sel-role').addEventListener('change', checkDuplicate);
+  document.getElementById('sel-employee').addEventListener('change', checkDuplicate);
+  document.getElementById('inp-email').addEventListener('input', checkDuplicate);
+};
+
+function loadConfigs() {
+  showPage('page-loading');
+  fetch(SCRIPT_URL + '?action=getConfigs')
+    .then(function(r){ return r.json(); })
+    .then(function(configs) {
+      activeConfigs = configs || [];
+      if (!activeConfigs.length) { showPage('page-blocked'); return; }
+      var sel = document.getElementById('sel-employee');
+      sel.innerHTML = '<option value="">— Оберіть співробітника —</option>';
+      activeConfigs.forEach(function(c) {
+        var opt = document.createElement('option');
+        opt.value = c.id;
+        opt.textContent = c.name + (c.position ? ' · ' + c.position : '');
+        sel.appendChild(opt);
+      });
+      showPage('page-start');
+    })
+    .catch(function() { showPage('page-blocked'); });
+}
+
+function buildScales() {
+  document.querySelectorAll('.scale[data-q]').forEach(function(container) {
+    var qId = container.dataset.q;
+    for (var v = 1; v <= 4; v++) {
+      (function(val) {
+        var btn = document.createElement('button');
+        btn.className = 'scale-btn'; btn.textContent = val; btn.type = 'button';
+        btn.addEventListener('click', function(){ selectScale(qId, val, container); });
+        container.appendChild(btn);
+      })(v);
+    }
+  });
+}
+
+function selectScale(qId, val, container) {
+  answers[qId] = val;
+  container.querySelectorAll('.scale-btn').forEach(function(b, i){
+    b.className = 'scale-btn' + (i+1===val ? ' sel-'+val : '');
+  });
+}
+
+function checkDuplicate() {
+  var email = document.getElementById('inp-email').value.trim().toLowerCase();
+  var role  = document.getElementById('sel-role').value;
+  var cfgId = document.getElementById('sel-employee').value;
+  var errEl = document.getElementById('already-submitted');
+  var btn   = document.getElementById('btn-start');
+  if (!email || !role || !cfgId) { errEl.style.display='none'; btn.disabled=false; return; }
+
+  fetch(SCRIPT_URL + '?action=getSubmissions&configId=' + cfgId)
+    .then(function(r){ return r.json(); })
+    .then(function(subs) {
+      var dup = (subs||[]).some(function(s){
+        return s.email && s.email.toLowerCase()===email && s.role===role;
+      });
+      errEl.style.display = dup ? 'block' : 'none';
+      btn.disabled = dup;
+    })
+    .catch(function(){ btn.disabled=false; });
+}
+
+function startForm() {
+  var fullname = document.getElementById('inp-fullname').value.trim();
+  var email    = document.getElementById('inp-email').value.trim();
+  var role     = document.getElementById('sel-role').value;
+  var cfgId    = document.getElementById('sel-employee').value;
+  if (!fullname) { alert('Введіть ваше ПІБ'); return; }
+  if (!email)    { alert('Введіть email'); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Введіть коректний email'); return; }
+  if (!role)     { alert('Оберіть роль'); return; }
+  if (!cfgId)    { alert('Оберіть співробітника'); return; }
+
+  var cfg = activeConfigs.find(function(c){ return c.id === cfgId; });
+  currentFullname  = fullname;
+  currentEmail     = email;
+  currentRole      = role;
+  currentConfigId  = cfgId;
+  currentEmployee  = cfg ? cfg.name : cfgId;
+  answers = {};
+
+  document.querySelectorAll('.scale-btn').forEach(function(b){ b.className='scale-btn'; });
+  document.querySelectorAll('textarea').forEach(function(t){ t.value=''; });
+  var rec = document.getElementById('m-recommend');
+  if (rec) rec.value = '';
+
+  showPage('page-' + role);
+}
+
+function submitForm() {
+  var cfg = CFG[currentRole];
+  for (var i=0; i<cfg.qs.length; i++) {
+    if (!answers[cfg.qs[i].id]) {
+      alert('Будь ласка, заповніть усі обов\'язкові питання — оберіть оцінку від 1 до 4.');
+      return;
+    }
+  }
+  if (currentRole==='manager' && !document.getElementById('m-recommend').value) {
+    alert('Будь ласка, оберіть рекомендацію.'); return;
+  }
+
+  var wSum=0, wTotal=0, breakdown=[];
+  cfg.qs.forEach(function(q){
+    wSum   += answers[q.id]*q.w;
+    wTotal += q.w*4;
+    breakdown.push({id:q.id, score:answers[q.id], weight:q.w});
+  });
+  var blockScore = (wSum/wTotal)*4;
+
+  var qual = {};
+  if (currentRole==='manager') {
+    qual.recommend = document.getElementById('m-recommend').value;
+    qual.develop   = document.getElementById('m-develop').value;
+    qual.hardFail  = answers['m1'] <= 2;
+  } else if (currentRole==='peer') {
+    qual.advice = document.getElementById('p-advice').value;
+  } else {
+    qual.best = document.getElementById('s-best').value;
+    qual.hard = document.getElementById('s-hard').value;
+  }
+
+  var answersObj = {};
+  breakdown.forEach(function(b){ answersObj[b.id] = b.score; });
+
+  var submitBtn = document.getElementById('btn-submit-'+currentRole[0]);
+  if (submitBtn) { submitBtn.disabled=true; submitBtn.textContent='Відправляємо...'; }
+
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({
+      action: 'submitEvaluation',
+      configId: currentConfigId,
+      employeeName: currentEmployee,
+      fullname: currentFullname,
+      email: currentEmail,
+      role: currentRole,
+      date: new Date().toLocaleDateString('uk-UA'),
+      blockScore: blockScore,
+      answers: answersObj,
+      qual: qual
+    })
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(res) {
+    if (res.error === 'duplicate') {
+      alert('Ви вже залишили оцінку для цього співробітника.');
+      showPage('page-start'); return;
+    }
+    checkCompletion();
+    showPage('page-success');
+  })
+  .catch(function() {
+    alert('Помилка відправки. Перевірте підключення до мережі.');
+    if (submitBtn) { submitBtn.disabled=false; submitBtn.textContent='Відправити оцінку →'; }
+  });
+}
+
+function checkCompletion() {
+  fetch(SCRIPT_URL + '?action=getSubmissions&configId=' + currentConfigId)
+    .then(function(r){ return r.json(); })
+    .then(function(subs) {
+      var cfg = activeConfigs.find(function(c){ return c.id===currentConfigId; });
+      if (!cfg || subs.length < cfg.total) return;
+      var mSubs = subs.filter(function(s){ return s.role==='manager'; });
+      var pSubs = subs.filter(function(s){ return s.role==='peer'; });
+      var sSubs = subs.filter(function(s){ return s.role==='self'; });
+      if (!mSubs.length || !sSubs.length) return;
+      var avg = function(arr){ return arr.reduce(function(a,b){ return a+b.blockScore; },0)/arr.length; };
+      var mScore=avg(mSubs), pScore=pSubs.length?avg(pSubs):null, sScore=avg(sSubs);
+      var finalScore = pScore!==null ? mScore*0.5+pScore*0.3+sScore*0.2 : mScore*0.625+sScore*0.375;
+      var hardFail = mSubs.some(function(s){ return s.qual&&s.qual.hardFail; });
+      var pass = !hardFail && finalScore>=THRESHOLD;
+      fetch(SCRIPT_URL, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({
+          action:'saveArchive', name:currentEmployee, position:cfg.position,
+          finalScore:finalScore, pass:pass, hardFail:hardFail,
+          blocks:{manager:mScore, peer:pScore, self:sScore},
+          date: new Date().toLocaleDateString('uk-UA')
+        })
+      }).catch(function(){});
+      fetch(SCRIPT_URL, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({action:'completeConfig', id:currentConfigId})
+      }).catch(function(){});
+    }).catch(function(){});
+}
+</script>
+</body>
+</html>
